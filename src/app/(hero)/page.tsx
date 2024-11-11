@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import { Github, Twitter, Youtube, Slack } from "lucide-react";
 import NavBar from "./_components/NavBar";
+import { useRouter } from "next/navigation";
 
 interface FloatingCardProps {
   delay: string;
@@ -75,6 +76,24 @@ function FooterLinkGroup({
 
 const HomePage = () => {
   const [isNavHovered, setIsNavHovered] = useState(false);
+  const router = useRouter();
+
+  // Add keyboard event listener
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.key.toLowerCase() === "l") {
+        router.push("/login");
+      }
+    };
+
+    // Add event listener when component mounts
+    window.addEventListener("keydown", handleKeyPress);
+
+    // Remove event listener when component unmounts
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [router]);
 
   const cards = [
     {

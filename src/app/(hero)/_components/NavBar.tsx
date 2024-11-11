@@ -30,15 +30,50 @@ interface NavBarProps {
 
 const NavBar: React.FC<NavBarProps> = ({ onHoverStateChange }) => {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+  const [isSubmenuHovered, setIsSubmenuHovered] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const handleMouseEnter = (itemName: string) => {
-    setHoveredItem(itemName);
-    onHoverStateChange(true);
+    const menuItem = menuItems.find((item) => item.name === itemName);
+    if (menuItem?.subItems) {
+      if (hoveredItem && hoveredItem !== itemName) {
+        // If switching between submenus, set transitioning state
+        setIsTransitioning(true);
+        // Small delay to allow fade out before changing content
+        setTimeout(() => {
+          setHoveredItem(itemName);
+          setIsTransitioning(false);
+        }, 150); // Half of our transition duration
+      } else {
+        setHoveredItem(itemName);
+      }
+      onHoverStateChange(true);
+    }
   };
 
   const handleMouseLeave = () => {
-    setHoveredItem(null);
-    onHoverStateChange(false);
+    if (!isSubmenuHovered) {
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setHoveredItem(null);
+        setIsTransitioning(false);
+        onHoverStateChange(false);
+      }, 150);
+    }
+  };
+
+  const handleSubmenuMouseEnter = () => {
+    setIsSubmenuHovered(true);
+  };
+
+  const handleSubmenuMouseLeave = () => {
+    setIsSubmenuHovered(false);
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setHoveredItem(null);
+      setIsTransitioning(false);
+      onHoverStateChange(false);
+    }, 150);
   };
 
   const renderSubmenu = (item: MenuItem) => {
@@ -53,7 +88,7 @@ const NavBar: React.FC<NavBarProps> = ({ onHoverStateChange }) => {
                 key={subItem.name}
                 className="block group"
               >
-                <Card className="bg-zinc-900/50 border border-white/10 hover:border-[#00beef]/50 transition-all duration-200 h-[260px]">
+                <Card className="bg-zinc-900 border border-white/10 hover:border-[#00beef]/50 transition-all duration-200 h-[260px]">
                   <CardHeader className="h-full">
                     <div className="flex flex-col justify-between h-full">
                       <div>
@@ -85,7 +120,7 @@ const NavBar: React.FC<NavBarProps> = ({ onHoverStateChange }) => {
                 key={subItem.name}
                 className="block group"
               >
-                <Card className="bg-zinc-900/50 border border-white/10 hover:border-[#00beef]/50 transition-all duration-200 h-[124px]">
+                <Card className="bg-zinc-900 border border-white/10 hover:border-[#00beef]/50 transition-all duration-200 h-[124px]">
                   <CardHeader>
                     <CardTitle className="text-white/90 group-hover:text-[#00beef] transition-colors duration-200">
                       {subItem.name}
@@ -109,7 +144,7 @@ const NavBar: React.FC<NavBarProps> = ({ onHoverStateChange }) => {
               key={subItem.name}
               className="block group"
             >
-              <Card className="bg-zinc-900/50 border border-white/10 hover:border-[#00beef]/50 transition-all duration-200 h-[260px]">
+              <Card className="bg-zinc-900 border border-white/10 hover:border-[#00beef]/50 transition-all duration-200 h-[260px]">
                 <CardHeader className="h-full">
                   <div className="flex flex-col justify-between h-full">
                     <div>
@@ -149,7 +184,7 @@ const NavBar: React.FC<NavBarProps> = ({ onHoverStateChange }) => {
                 href={subItem.link}
                 className="block group"
               >
-                <Card className="bg-zinc-900/50 border border-white/10 hover:border-[#00beef]/50 transition-all duration-200">
+                <Card className="bg-zinc-900 border border-white/10 hover:border-[#00beef]/50 transition-all duration-200">
                   <CardHeader className="flex flex-row items-center p-3 space-y-0">
                     <div className="flex-1">
                       <span className="text-white/90 text-[17px] font-medium group-hover:text-[#00beef] transition-colors duration-200 mr-3">
@@ -174,7 +209,7 @@ const NavBar: React.FC<NavBarProps> = ({ onHoverStateChange }) => {
                 className="block group"
               >
                 <Card
-                  className={`bg-zinc-900/50 border border-white/10 hover:border-[#00beef]/50 transition-all duration-200 h-[184px]`}
+                  className={`bg-zinc-900 border border-white/10 hover:border-[#00beef]/50 transition-all duration-200 h-[184px]`}
                 >
                   <CardHeader className="h-full">
                     <div className="flex flex-col h-full">
@@ -244,6 +279,7 @@ const NavBar: React.FC<NavBarProps> = ({ onHoverStateChange }) => {
                   key={item.name}
                   className="relative flex text-medium whitespace-nowrap items-center"
                   onMouseEnter={() => handleMouseEnter(item.name)}
+                  onMouseLeave={handleMouseLeave}
                 >
                   <Link
                     className="text-white/70 text-[17px] inline-flex items-center no-underline hover:text-white transition-colors duration-200 font-medium"
@@ -279,20 +315,29 @@ const NavBar: React.FC<NavBarProps> = ({ onHoverStateChange }) => {
           </div>
         </div>
 
-        {/* Submenu */}
-        {menuItems.map((item) =>
-          item.subItems && hoveredItem === item.name ? (
-            <div
-              key={item.name}
-              className="absolute left-0 w-full top-full pt-3"
-              onMouseLeave={handleMouseLeave}
-            >
-              <div className="w-full bg-black/80 backdrop-blur-md border border-white/10 rounded-[20px]">
-                <div className="p-4">{renderSubmenu(item)}</div>
+        <div
+          className={`absolute left-0 w-full top-full pt-3 transition-all duration-300 ${
+            hoveredItem
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 -translate-y-2"
+          } ${isTransitioning ? "opacity-0" : ""}`}
+        >
+          {/* Submenu */}
+          {menuItems.map((item) =>
+            item.subItems && hoveredItem === item.name ? (
+              <div
+                key={item.name}
+                className="absolute left-0 w-full top-full pt-3"
+                onMouseEnter={handleSubmenuMouseEnter}
+                onMouseLeave={handleSubmenuMouseLeave}
+              >
+                <div className="w-full bg-black/80 backdrop-blur-md border border-white/10 rounded-[20px]">
+                  <div className="p-4">{renderSubmenu(item)}</div>
+                </div>
               </div>
-            </div>
-          ) : null
-        )}
+            ) : null
+          )}
+        </div>
       </header>
     </nav>
   );
