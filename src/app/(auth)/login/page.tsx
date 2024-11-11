@@ -1,19 +1,22 @@
 import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Login() {
   return (
     <div className="min-h-screen bg-black flex flex-col items-center justify-center p-4">
       {/* Logo */}
       <div className="mb-6">
-        <Image
-          src="/logo-white.png"
-          alt="Ace Logo"
-          width={80}
-          height={40}
-          className="w-20 object-contain"
-        />
+        <Link href="/">
+          <Image
+            src="/logo-white.png"
+            alt="Ace Logo"
+            width={80}
+            height={40}
+            className="w-20 object-contain"
+          />
+        </Link>
       </div>
 
       {/* Login Text */}
@@ -52,6 +55,18 @@ export default function Login() {
         >
           Login with Passkey
         </Button>
+      </div>
+
+      <div className="my-8 w-full max-w-sm flex items-center justify-center">
+        <div className="w-full border-t border-zinc-800"></div>
+      </div>
+
+      {/* Login Link */}
+      <div className="text-sm text-zinc-500">
+        Don't have an account?{" "}
+        <Link href="/signup" className="text-white hover:underline font-medium">
+          Register →
+        </Link>
       </div>
     </div>
   );

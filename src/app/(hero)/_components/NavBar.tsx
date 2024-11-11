@@ -24,8 +24,22 @@ interface MenuItem {
   subItems?: SubItem[];
 }
 
-const NavBar = () => {
+interface NavBarProps {
+  onHoverStateChange: (isHovered: boolean) => void;
+}
+
+const NavBar: React.FC<NavBarProps> = ({ onHoverStateChange }) => {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+
+  const handleMouseEnter = (itemName: string) => {
+    setHoveredItem(itemName);
+    onHoverStateChange(true);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredItem(null);
+    onHoverStateChange(false);
+  };
 
   const renderSubmenu = (item: MenuItem) => {
     if (item.name === "Products") {
@@ -229,7 +243,7 @@ const NavBar = () => {
                 <li
                   key={item.name}
                   className="relative flex text-medium whitespace-nowrap items-center"
-                  onMouseEnter={() => setHoveredItem(item.name)}
+                  onMouseEnter={() => handleMouseEnter(item.name)}
                 >
                   <Link
                     className="text-white/70 text-[17px] inline-flex items-center no-underline hover:text-white transition-colors duration-200 font-medium"
@@ -247,7 +261,7 @@ const NavBar = () => {
                 variant="ghost"
                 className="h-11 px-5 text-[17px] font-medium text-white border border-white/20 hover:border-[#00beef] hover:text-[#00beef] hover:bg-transparent transition-all duration-200 rounded-full group"
               >
-                <Link href="https://calendly.com/samhajj/meet" target="_blank">
+                <Link href="/login">
                   <div className="flex items-center">
                     <span>Log in</span>
                     <div className="ml-2 px-2 py-0.5 text-sm rounded-full bg-white/10 group-hover:bg-[#00beef]/10 transition-colors duration-200">
@@ -256,7 +270,7 @@ const NavBar = () => {
                   </div>
                 </Link>
               </Button>
-              <Link href="https://calendly.com/samhajj/meet" target="_blank">
+              <Link href="/signup">
                 <Button className="h-11 px-5 text-[17px] font-medium bg-white text-black border border-transparent hover:bg-transparent hover:text-[#00beef] hover:border-[#00beef] transition-all duration-200 rounded-full">
                   Sign up
                 </Button>
@@ -271,7 +285,7 @@ const NavBar = () => {
             <div
               key={item.name}
               className="absolute left-0 w-full top-full pt-3"
-              onMouseLeave={() => setHoveredItem(null)}
+              onMouseLeave={handleMouseLeave}
             >
               <div className="w-full bg-black/80 backdrop-blur-md border border-white/10 rounded-[20px]">
                 <div className="p-4">{renderSubmenu(item)}</div>

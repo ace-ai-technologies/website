@@ -8,13 +8,15 @@ export default function SignInPage() {
     <div className="min-h-screen bg-black flex flex-col items-center justify-center p-4">
       {/* Logo */}
       <div className="mb-6">
-        <Image
-          src="/logo-white.png"
-          alt="Ace Logo"
-          width={80}
-          height={40}
-          className="w-20 object-contain"
-        />
+        <Link href="/">
+          <Image
+            src="/logo-white.png"
+            alt="Ace Logo"
+            width={80}
+            height={40}
+            className="w-20 object-contain"
+          />
+        </Link>
       </div>
 
       {/* Login Text */}

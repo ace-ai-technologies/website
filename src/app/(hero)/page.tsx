@@ -1,10 +1,11 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import { Github, Twitter, Youtube, Slack } from "lucide-react";
+import NavBar from "./_components/NavBar";
 
 interface FloatingCardProps {
   delay: string;
@@ -73,6 +74,8 @@ function FooterLinkGroup({
 }
 
 const HomePage = () => {
+  const [isNavHovered, setIsNavHovered] = useState(false);
+
   const cards = [
     {
       delay: "0s",
@@ -118,8 +121,15 @@ const HomePage = () => {
 
   return (
     <div className="relative bg-black">
+      <NavBar onHoverStateChange={setIsNavHovered} />
       {/* First section with floating cards */}
-      <section className="relative min-h-screen overflow-hidden">
+      <section
+        className={`relative min-h-screen overflow-hidden transition-all duration-300 ${
+          isNavHovered ? "blur-sm" : ""
+        }`}
+      >
+        {/* Added spotlight effect */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-zinc-900 via-black to-black" />
         {/* Floating cards container */}
         <div className="absolute inset-0">
           <div className="relative w-full h-full">
@@ -187,7 +197,11 @@ const HomePage = () => {
       `}</style>
 
       {/* Second section with spotlight effect */}
-      <section className="relative min-h-screen flex items-center justify-center flex-col gap-8 px-4 py-20">
+      <section
+        className={`relative min-h-screen flex items-center justify-center flex-col gap-8 px-4 py-20 transition-all duration-300 ${
+          isNavHovered ? "blur-sm" : ""
+        }`}
+      >
         {/* Spotlight effect */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-zinc-900 via-black to-black" />
 
@@ -230,7 +244,11 @@ const HomePage = () => {
         </div>
       </section>
 
-      <section className="relative h-[60vh] flex items-center justify-between px-16 py-20 bg-gradient-to-b from-zinc-900 via-black to-black">
+      <section
+        className={`relative h-[60vh] flex items-center justify-between px-16 py-20 bg-gradient-to-b from-zinc-900 via-black to-black transition-all duration-300 ${
+          isNavHovered ? "blur-sm" : ""
+        }`}
+      >
         {/* Text on the left with additional margin */}
         <div className="max-w-xl ml-20 relative">
           {/* Set relative to align buttons */}
@@ -252,7 +270,11 @@ const HomePage = () => {
         </div>
       </section>
 
-      <footer className="border-t border-zinc-800 bg-black">
+      <footer
+        className={`border-t border-zinc-800 bg-black transition-all duration-300 ${
+          isNavHovered ? "blur-sm" : ""
+        }`}
+      >
         <div className="container mx-auto px-16">
           <div className="flex flex-col gap-12 py-12">
             <div className="flex flex-col lg:flex-row gap-12 lg:gap-4 justify-between">
