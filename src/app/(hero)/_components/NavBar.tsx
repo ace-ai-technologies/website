@@ -25,10 +25,10 @@ interface MenuItem {
 }
 
 interface NavBarProps {
-  onHoverStateChange: (isHovered: boolean) => void;
+  onHoverStateChange?: (isHovered: boolean) => void;
 }
 
-const NavBar: React.FC<NavBarProps> = ({ onHoverStateChange }) => {
+const NavBar: React.FC<NavBarProps> = ({ onHoverStateChange = () => {} }) => {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const [isSubmenuHovered, setIsSubmenuHovered] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -273,7 +273,7 @@ const NavBar: React.FC<NavBarProps> = ({ onHoverStateChange }) => {
             </div>
 
             {/* Menu Items */}
-            <ul className="flex flex-row items-center justify-center flex-1 gap-8">
+            <ul className="flex flex-row items-center justify-center flex-1 gap-12">
               {menuItems.map((item) => (
                 <li
                   key={item.name}
@@ -295,19 +295,19 @@ const NavBar: React.FC<NavBarProps> = ({ onHoverStateChange }) => {
             <div className="hidden md:flex items-center gap-3">
               <Button
                 variant="ghost"
-                className="h-11 px-5 text-[17px] font-medium text-white border border-white/20 hover:border-[#00beef] hover:text-[#00beef] hover:bg-transparent transition-all duration-200 rounded-full group"
+                className="h-9 px-3 text-base font-medium text-white border border-white/20 hover:border-[#00beef] hover:text-[#00beef] hover:bg-transparent transition-all duration-200 rounded-lg group"
               >
                 <Link href="/login">
                   <div className="flex items-center">
                     <span>Log in</span>
-                    <div className="ml-2 px-2 py-0.5 text-sm rounded-full bg-white/10 group-hover:bg-[#00beef]/10 transition-colors duration-200">
+                    <div className="ml-2 px-2 py-0.5 text-sm rounded-md bg-white/10 group-hover:bg-[#00beef]/10 transition-colors duration-200">
                       L
                     </div>
                   </div>
                 </Link>
               </Button>
               <Link href="/signup">
-                <Button className="h-11 px-5 text-[17px] font-medium bg-white text-black border border-transparent hover:bg-transparent hover:text-[#00beef] hover:border-[#00beef] transition-all duration-200 rounded-full">
+                <Button className="h-9 px-3 text-base font-medium bg-white text-black border border-transparent hover:bg-transparent hover:text-[#00beef] hover:border-[#00beef] transition-all duration-200 rounded-lg">
                   Sign up
                 </Button>
               </Link>

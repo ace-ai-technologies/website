@@ -27,7 +27,7 @@ const FloatingCard: React.FC<FloatingCardProps> = ({
       transform: `translate(-50%, -50%) rotate(${initialRotation}deg) translateX(200px)`,
     }}
   >
-    <div className="text-zinc-600 text-sm font-mono p-2">"LABEL"</div>
+    <div className="text-zinc-600 text-sm font-mono p-2">LABEL</div>
   </div>
 );
 
