@@ -55,13 +55,13 @@ export default function CareersPage() {
             <p className="text-lg">
               We are building the tools for the next generation of high-impact
               companies. The place where ambitious creators come to bring
-              radical ideas to life. Our mission is to empower the world's best
-              product and engineering teams to aim higher, move faster, and
+              radical ideas to life. Our mission is to empower the world&apos;s
+              best product and engineering teams to aim higher, move faster, and
               build products that feel{" "}
               <span className="text-purple-400">magical</span> again.
             </p>
 
-            <p className="text-lg">But we can't do it alone.</p>
+            <p className="text-lg">But we can&apos;t do it alone.</p>
 
             <p className="text-lg">
               We are looking for talented people who share our passion for
@@ -69,7 +69,7 @@ export default function CareersPage() {
             </p>
 
             <p className="text-lg">
-              Join us and let's bring back the magic of software.
+              Join us and let&apos;s bring back the magic of software.
             </p>
           </div>
 
@@ -200,7 +200,8 @@ export default function CareersPage() {
               <div className="space-y-4">
                 <Lightbulb className="w-8 h-8 text-purple-400" />
                 <h3 className="text-xl font-medium">
-                  You're able to take a bird's eye view and solve issues.
+                  You&apos;re able to take a bird&apos;s eye view and solve
+                  issues.
                 </h3>
               </div>
 
@@ -283,7 +284,7 @@ export default function CareersPage() {
           <div className="mt-8 space-y-6 text-gray-400">
             <p className="text-lg">
               We believe that the freedom to work remotely allows for deeper and
-              more meaningful work. That's why we built Linear as fully
+              more meaningful work. That&apos;s why we built Linear as fully
               distributed company from the start.
             </p>
 

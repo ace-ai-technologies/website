@@ -63,7 +63,7 @@ export default function Login() {
 
       {/* Login Link */}
       <div className="text-sm text-zinc-500">
-        Don't have an account?
+        Don&apos;t have an account?
         <Link href="/signup" className="text-white hover:underline font-medium">
           Register →
         </Link>
