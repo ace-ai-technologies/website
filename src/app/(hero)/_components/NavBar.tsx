@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -30,51 +30,55 @@ interface NavBarProps {
 
 const NavBar: React.FC<NavBarProps> = ({ onHoverStateChange = () => {} }) => {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
-  const [isSubmenuHovered, setIsSubmenuHovered] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout>();
+  const submenuTimeoutRef = useRef<NodeJS.Timeout>();
 
-  const handleMouseEnter = (itemName: string) => {
-    const menuItem = menuItems.find((item) => item.name === itemName);
-    if (menuItem?.subItems) {
-      if (hoveredItem && hoveredItem !== itemName) {
-        // If switching between submenus, set transitioning state
-        setIsTransitioning(true);
-        // Small delay to allow fade out before changing content
-        setTimeout(() => {
-          setHoveredItem(itemName);
-          setIsTransitioning(false);
-        }, 150); // Half of our transition duration
-      } else {
-        setHoveredItem(itemName);
-      }
-      onHoverStateChange(true);
+  const clearTimeouts = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    if (submenuTimeoutRef.current) {
+      clearTimeout(submenuTimeoutRef.current);
     }
   };
 
-  const handleMouseLeave = () => {
-    if (!isSubmenuHovered) {
+  const handleMouseEnter = useCallback(
+    (itemName: string) => {
+      clearTimeouts();
+
+      const menuItem = menuItems.find((item) => item.name === itemName);
+      if (menuItem?.subItems) {
+        if (hoveredItem && hoveredItem !== itemName) {
+          setIsTransitioning(true);
+          timeoutRef.current = setTimeout(() => {
+            setHoveredItem(itemName);
+            setIsTransitioning(false);
+          }, 150);
+        } else {
+          setHoveredItem(itemName);
+        }
+        onHoverStateChange(true);
+      }
+    },
+    [hoveredItem, onHoverStateChange]
+  );
+
+  const handleMouseLeave = useCallback(() => {
+    clearTimeouts();
+    submenuTimeoutRef.current = setTimeout(() => {
       setIsTransitioning(true);
-      setTimeout(() => {
+      timeoutRef.current = setTimeout(() => {
         setHoveredItem(null);
         setIsTransitioning(false);
         onHoverStateChange(false);
       }, 150);
-    }
-  };
+    }, 100);
+  }, [onHoverStateChange]);
 
-  const handleSubmenuMouseEnter = () => {
-    setIsSubmenuHovered(true);
-  };
-
-  const handleSubmenuMouseLeave = () => {
-    setIsSubmenuHovered(false);
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setHoveredItem(null);
-      setIsTransitioning(false);
-      onHoverStateChange(false);
-    }, 150);
-  };
+  const cancelHideSubmenu = useCallback(() => {
+    clearTimeouts();
+  }, []);
 
   const renderSubmenu = (item: MenuItem) => {
     if (item.name === "Products") {
@@ -253,7 +257,7 @@ const NavBar: React.FC<NavBarProps> = ({ onHoverStateChange = () => {} }) => {
 
   return (
     <nav className="fixed top-[20px] left-1/2 transform -translate-x-1/2 z-40 flex justify-center w-[98%] max-w-[1100px]">
-      <header className="relative z-40 flex flex-col w-full bg-black/80 backdrop-blur-md border border-white/10 rounded-[20px] overflow-visible">
+      <header className="relative z-40 flex flex-col w-full bg-black/[0.3] backdrop-blur-md border border-white/10 rounded-[20px] overflow-visible ">
         <div className="flex w-full items-center h-[67px] rounded-[20px] px-8">
           <div className="flex items-center justify-between w-full gap-8">
             {/* Logo */}
@@ -287,6 +291,12 @@ const NavBar: React.FC<NavBarProps> = ({ onHoverStateChange = () => {} }) => {
                   >
                     {item.name}
                   </Link>
+                  {item.subItems && hoveredItem === item.name && (
+                    <div
+                      className="absolute left-0 w-full h-4 bottom-0 translate-y-full"
+                      onMouseEnter={() => handleMouseEnter(item.name)}
+                    />
+                  )}
                 </li>
               ))}
             </ul>
@@ -315,29 +325,23 @@ const NavBar: React.FC<NavBarProps> = ({ onHoverStateChange = () => {} }) => {
           </div>
         </div>
 
-        <div
-          className={`absolute left-0 w-full top-full pt-3 transition-all duration-300 ${
-            hoveredItem
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 -translate-y-2"
-          } ${isTransitioning ? "opacity-0" : ""}`}
-        >
-          {/* Submenu */}
-          {menuItems.map((item) =>
-            item.subItems && hoveredItem === item.name ? (
-              <div
-                key={item.name}
-                className="absolute left-0 w-full top-full pt-3"
-                onMouseEnter={handleSubmenuMouseEnter}
-                onMouseLeave={handleSubmenuMouseLeave}
-              >
-                <div className="w-full bg-black/80 backdrop-blur-md border border-white/10 rounded-[20px]">
-                  <div className="p-4">{renderSubmenu(item)}</div>
-                </div>
+        {/* Submenu */}
+        {menuItems.map((item) =>
+          item.subItems && hoveredItem === item.name ? (
+            <div
+              key={item.name}
+              className={`absolute left-0 w-full top-[calc(100%-1px)] pt-4 transition-all duration-300 ${
+                isTransitioning ? "opacity-0" : "opacity-100"
+              }`}
+              onMouseEnter={cancelHideSubmenu}
+              onMouseLeave={handleMouseLeave}
+            >
+              <div className="w-full bg-black/80 backdrop-blur-md border border-white/10 rounded-[20px]">
+                <div className="p-4">{renderSubmenu(item)}</div>
               </div>
-            ) : null
-          )}
-        </div>
+            </div>
+          ) : null
+        )}
       </header>
     </nav>
   );
