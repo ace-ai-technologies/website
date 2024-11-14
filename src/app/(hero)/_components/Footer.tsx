@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Github, Twitter, Youtube, Slack } from "lucide-react";
-import { useState } from "react";
 
 function FooterLinkGroup({
   title,
