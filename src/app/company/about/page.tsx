@@ -19,7 +19,7 @@ export default function AboutPage() {
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start py-24 px-40">
           <div className="max-w-2xl">
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight">
-              We're crafting the expertise transfer tool for humanity
+              We&apos;re crafting the expertise transfer tool for humanity
             </h2>
           </div>
           <div className="mt-8 lg:mt-4">
@@ -37,11 +37,11 @@ export default function AboutPage() {
           <div className="lg:flex lg:gap-x-8">
             <div className="max-w-2xl px-20">
               <h2 className="text-4xl md:text-5xl font-bold tracking-tight leading-tight mb-8">
-                We're crafting the expertise transfer tool
+                We&apos;re crafting the expertise transfer tool
               </h2>
               <p className="text-gray-500 text-lg mb-8">Lorem ipsum</p>
               <button className="inline-flex items-center px-4 py-2 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors">
-                <span className="mr-2">We're hiring</span>
+                <span className="mr-2">We&apos;re hiring</span>
                 <svg
                   width="16"
                   height="16"

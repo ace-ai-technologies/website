@@ -2,8 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import Image from "next/image";
 import NavBar from "./_components/NavBar";
 import { useRouter } from "next/navigation";
 import Footer from "./_components/Footer";

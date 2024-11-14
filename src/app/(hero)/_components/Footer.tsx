@@ -32,12 +32,9 @@ function FooterLinkGroup({
 }
 
 export default function Footer() {
-  const [isNavHovered, setIsNavHovered] = useState(false);
   return (
     <footer
-      className={`border-t border-zinc-800 bg-black transition-all duration-300 ${
-        isNavHovered ? "blur-sm" : ""
-      }`}
+      className={`border-t border-zinc-800 bg-black transition-all duration-300}`}
     >
       <div className="container mx-auto px-16">
         <div className="flex flex-col gap-12 py-12">

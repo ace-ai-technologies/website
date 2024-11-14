@@ -1,4 +1,5 @@
 import NavBar from "@/app/(hero)/_components/NavBar";
+import Image from "next/image";
 import {
   MessageSquare,
   Heart,
@@ -122,27 +123,53 @@ export default function CareersPage() {
 
             {/* Partner Logos */}
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-8 items-center justify-items-center opacity-70">
-              <img src="/images/ramp.svg" alt="Ramp" className="h-6 w-auto" />
-              <img
+              <Image
+                src="/images/ramp.svg"
+                alt="Ramp"
+                width={120}
+                height={24}
+                className="h-6 w-auto"
+              />
+              <Image
                 src="/images/vercel.svg"
                 alt="Vercel"
+                width={120}
+                height={24}
                 className="h-6 w-auto"
               />
-              <img src="/images/scale.svg" alt="Scale" className="h-6 w-auto" />
-              <img src="/images/monzo.svg" alt="Monzo" className="h-6 w-auto" />
-              <img
+              <Image
+                src="/images/scale.svg"
+                alt="Scale"
+                width={120}
+                height={24}
+                className="h-6 w-auto"
+              />
+              <Image
+                src="/images/monzo.svg"
+                alt="Monzo"
+                width={120}
+                height={24}
+                className="h-6 w-auto"
+              />
+              <Image
                 src="/images/perplexity.svg"
                 alt="Perplexity"
+                width={120}
+                height={24}
                 className="h-6 w-auto"
               />
-              <img
+              <Image
                 src="/images/remote.svg"
                 alt="Remote"
+                width={120}
+                height={24}
                 className="h-6 w-auto"
               />
-              <img
+              <Image
                 src="/images/rippling.svg"
                 alt="Rippling"
+                width={120}
+                height={24}
                 className="h-6 w-auto"
               />
             </div>
@@ -179,7 +206,7 @@ export default function CareersPage() {
 
             {/* Qualities Grid */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-16">
-              {/* Quality 1 */}
+              {/* Quality boxes remain unchanged */}
               <div className="space-y-4">
                 <MessageSquare className="w-8 h-8 text-purple-400" />
                 <h3 className="text-xl font-medium">
@@ -187,7 +214,6 @@ export default function CareersPage() {
                 </h3>
               </div>
 
-              {/* Quality 2 */}
               <div className="space-y-4">
                 <Heart className="w-8 h-8 text-purple-400" />
                 <h3 className="text-xl font-medium">
@@ -196,7 +222,6 @@ export default function CareersPage() {
                 </h3>
               </div>
 
-              {/* Quality 3 */}
               <div className="space-y-4">
                 <Lightbulb className="w-8 h-8 text-purple-400" />
                 <h3 className="text-xl font-medium">
@@ -205,7 +230,6 @@ export default function CareersPage() {
                 </h3>
               </div>
 
-              {/* Quality 4 */}
               <div className="space-y-4">
                 <Users className="w-8 h-8 text-purple-400" />
                 <h3 className="text-xl font-medium">
@@ -213,7 +237,6 @@ export default function CareersPage() {
                 </h3>
               </div>
 
-              {/* Quality 5 */}
               <div className="space-y-4">
                 <Wrench className="w-8 h-8 text-purple-400" />
                 <h3 className="text-xl font-medium">
@@ -221,7 +244,6 @@ export default function CareersPage() {
                 </h3>
               </div>
 
-              {/* Quality 6 */}
               <div className="space-y-4">
                 <Sailboat className="w-8 h-8 text-purple-400" />
                 <h3 className="text-xl font-medium">
@@ -239,30 +261,46 @@ export default function CareersPage() {
 
               {/* Company Logos */}
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-12 items-center justify-items-center opacity-70">
-                <img
+                <Image
                   src="/images/airbnb.svg"
                   alt="Airbnb"
+                  width={160}
+                  height={32}
                   className="h-8 w-auto"
                 />
-                <img
+                <Image
                   src="/images/coinbase.svg"
                   alt="Coinbase"
+                  width={160}
+                  height={32}
                   className="h-8 w-auto"
                 />
-                <img src="/images/uber.svg" alt="Uber" className="h-8 w-auto" />
-                <img
+                <Image
+                  src="/images/uber.svg"
+                  alt="Uber"
+                  width={160}
+                  height={32}
+                  className="h-8 w-auto"
+                />
+                <Image
                   src="/images/abstract.svg"
                   alt="Abstract"
+                  width={160}
+                  height={32}
                   className="h-8 w-auto"
                 />
-                <img
+                <Image
                   src="/images/stripe.svg"
                   alt="Stripe"
+                  width={160}
+                  height={32}
                   className="h-8 w-auto"
                 />
-                <img
+                <Image
                   src="/images/slack.svg"
                   alt="Slack"
+                  width={160}
+                  height={32}
                   className="h-8 w-auto"
                 />
               </div>
