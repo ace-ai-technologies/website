@@ -1,12 +1,15 @@
 import React from "react";
+import Image from "next/image";
 
 const TeamMember = ({ name, imageUrl }: { name: string; imageUrl: string }) => (
   <div className="flex items-center space-x-2 py-2">
-    <div className="w-8 h-8 rounded-full bg-gray-800 overflow-hidden">
-      <img
+    <div className="w-8 h-8 rounded-full bg-gray-800 overflow-hidden relative">
+      <Image
         src={imageUrl || "/api/placeholder/32/32"}
         alt={name}
-        className="w-full h-full object-cover"
+        fill
+        sizes="32px"
+        className="object-cover"
       />
     </div>
     <span className="text-sm text-gray-300">{name}</span>

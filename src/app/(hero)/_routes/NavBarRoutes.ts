@@ -17,7 +17,7 @@ export const menuItems = [
         },
         {
           name: "Aurora",
-          link: "/product4",
+          link: "/products/aurora",
           description: "lorem ipsum"
         }
     ]},
